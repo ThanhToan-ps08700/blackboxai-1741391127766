@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Cùng Tôi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-red-600 to-red-700 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center">
+                    <h1 id="siteTitle" class="text-3xl font-bold text-white flex items-center bg-red-800 px-8 py-4 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-red-600">
+                        <i class="fas fa-dragon mr-3 animate-pulse text-yellow-400"></i>
+                        Pokemon Cùng Tôi
+                    </h1>
+                </div>
+                <div class="flex items-center gap-4 w-full md:w-96">
+                    <button id="languageToggle" 
+                            class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-semibold flex items-center gap-2">
+                        <i class="fas fa-globe"></i>
+                        <span id="languageText">EN</span>
+                    </button>
+                    <div class="relative w-full">
+                        <input type="text" 
+                               id="searchInput" 
+                               placeholder="Search Pokémon..." 
+                               class="w-full px-5 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-400 pl-12 shadow-md border border-gray-200">
+                        <i class="fas fa-search absolute left-4 top-4 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Filters -->
+        <div class="mb-8 flex flex-wrap gap-4">
+            <select id="genFilter" 
+                    class="px-4 py-2 rounded-lg bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 hover:border-gray-300 transition-colors duration-200">
+                <option value="">All Generations</option>
+                <option value="1">Gen 1 (1-151)</option>
+                <option value="2">Gen 2 (152-251)</option>
+                <option value="3">Gen 3 (252-386)</option>
+                <option value="4">Gen 4 (387-493)</option>
+                <option value="5">Gen 5 (494-649)</option>
+                <option value="6">Gen 6 (650-721)</option>
+                <option value="7">Gen 7 (722-809)</option>
+                <option value="8">Gen 8 (810-905)</option>
+                <option value="9">Gen 9 (906-1008)</option>
+            </select>
+            <select id="typeFilter" 
+                    class="px-4 py-2 rounded-lg bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 hover:border-gray-300 transition-colors duration-200">
+                <option value="">All Types</option>
+                <option value="normal" data-type="normal">Normal</option>
+                <option value="fire" data-type="fire">Fire</option>
+                <option value="water" data-type="water">Water</option>
+                <option value="electric" data-type="electric">Electric</option>
+                <option value="grass" data-type="grass">Grass</option>
+                <option value="ice" data-type="ice">Ice</option>
+                <option value="fighting" data-type="fighting">Fighting</option>
+                <option value="poison" data-type="poison">Poison</option>
+                <option value="ground" data-type="ground">Ground</option>
+                <option value="flying" data-type="flying">Flying</option>
+                <option value="psychic" data-type="psychic">Psychic</option>
+                <option value="bug" data-type="bug">Bug</option>
+                <option value="rock" data-type="rock">Rock</option>
+                <option value="ghost" data-type="ghost">Ghost</option>
+                <option value="dragon" data-type="dragon">Dragon</option>
+                <option value="dark" data-type="dark">Dark</option>
+                <option value="steel" data-type="steel">Steel</option>
+                <option value="fairy" data-type="fairy">Fairy</option>
+            </select>
+            <select id="sortFilter" 
+                    class="px-4 py-2 rounded-lg bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 hover:border-gray-300 transition-colors duration-200">
+                <option value="id">Sort by ID</option>
+                <option value="name">Sort by Name</option>
+            </select>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="flex justify-center items-center py-20">
+            <div class="relative w-20 h-20">
+                <div class="absolute top-0 w-20 h-20 rounded-full border-4 border-t-red-600 animate-spin"></div>
+                <div class="absolute top-8 left-8 w-4 h-4 bg-white rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Pokemon Grid -->
+        <div id="pokemonGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <!-- Pokemon cards will be dynamically inserted here -->
+        </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="hidden text-center py-20">
+                <div class="inline-block p-8 bg-white rounded-lg shadow-lg">
+                    <i class="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
+                    <p class="text-xl text-gray-600" id="errorText"></p>
+                    <p class="text-gray-500 mt-2" id="errorSubtext"></p>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="hidden text-center py-20">
+                <div class="inline-block p-8 bg-white rounded-lg shadow-lg">
+                    <i class="fas fa-search text-5xl text-gray-400 mb-4"></i>
+                    <p class="text-xl text-gray-600" id="noResultsText"></p>
+                    <p class="text-gray-500 mt-2" id="noResultsSubtext"></p>
+                </div>
+            </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-auto">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <div class="flex items-center mb-3">
+                        <h2 class="text-xl font-bold text-white flex items-center bg-gray-800 px-6 py-3 rounded-lg shadow-lg border-2 border-gray-700 transform hover:scale-105 transition-all duration-300">
+                            <i class="fas fa-dragon mr-2 animate-pulse text-yellow-400"></i>
+                            Pokemon Cùng Tôi
+                        </h2>
+                    </div>
+                    <p>&copy; 2024 Pokemon Cùng Tôi</p>
+                    <p class="text-sm text-gray-400 mt-1">All rights reserved</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="https://zalo.me/g/fkdrja907" 
+                       class="text-gray-400 hover:text-blue-400 transform hover:scale-110 transition-all duration-200" 
+                       title="Join us on Zalo" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        <i class="fas fa-comment-dots text-2xl"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@pokemoncungtoi" 
+                       class="text-gray-400 hover:text-red-500 transform hover:scale-110 transition-all duration-200" 
+                       title="Subscribe to our YouTube channel" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        <i class="fab fa-youtube text-2xl"></i>
+                    </a>
+                    <a href="https://www.facebook.com/groups/pokemoncungtoi" 
+                       class="text-gray-400 hover:text-blue-600 transform hover:scale-110 transition-all duration-200" 
+                       title="Join our Facebook group" 
+                       target="_blank" 
+                       rel="noopener noreferrer">
+                        <i class="fab fa-facebook text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="text-sm text-gray-400">Powered by <a href="https://pokeapi.co" target="_blank" class="hover:text-yellow-400 transition-colors duration-200">PokéAPI</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Buttons -->
+    <div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+        <button id="scrollTopBtn" 
+                class="bg-red-600 hover:bg-red-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 opacity-0"
+                aria-label="Scroll to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button id="scrollBottomBtn" 
+                class="bg-red-600 hover:bg-red-700 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
+                aria-label="Scroll to bottom">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
