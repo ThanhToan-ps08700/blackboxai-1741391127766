@@ -1,0 +1,112 @@
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Card hover animation */
+.pokemon-card {
+    transition: all 0.3s ease;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Type badge gradients */
+.type-normal { background: linear-gradient(145deg, #A8A878, #8A8A59); }
+.type-fire { background: linear-gradient(145deg, #F08030, #DD6610); }
+.type-water { background: linear-gradient(145deg, #6890F0, #386CEB); }
+.type-electric { background: linear-gradient(145deg, #F8D030, #F0C108); }
+.type-grass { background: linear-gradient(145deg, #78C850, #5CA935); }
+.type-ice { background: linear-gradient(145deg, #98D8D8, #69C6C6); }
+.type-fighting { background: linear-gradient(145deg, #C03028, #9D2721); }
+.type-poison { background: linear-gradient(145deg, #A040A0, #803380); }
+.type-ground { background: linear-gradient(145deg, #E0C068, #D4B14E); }
+.type-flying { background: linear-gradient(145deg, #A890F0, #9180C4); }
+.type-psychic { background: linear-gradient(145deg, #F85888, #F61C5D); }
+.type-bug { background: linear-gradient(145deg, #A8B820, #8B9A1B); }
+.type-rock { background: linear-gradient(145deg, #B8A038, #93802D); }
+.type-ghost { background: linear-gradient(145deg, #705898, #554374); }
+.type-dragon { background: linear-gradient(145deg, #7038F8, #4C08EF); }
+.type-dark { background: linear-gradient(145deg, #705848, #513F34); }
+.type-steel { background: linear-gradient(145deg, #B8B8D0, #9797BA); }
+.type-fairy { background: linear-gradient(145deg, #EE99AC, #E7707E); }
+
+/* Modal animation */
+.modal-enter {
+    animation: modalFade 0.3s ease-out;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Stats bar animation */
+.stat-bar {
+    transition: width 1s ease-out;
+}
+
+/* Skills badge animation */
+@keyframes skillFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.skill-badge {
+    animation: skillFadeIn 0.3s ease-out forwards;
+    animation-delay: calc(var(--skill-index) * 0.1s);
+}
+
+/* Search input styles */
+.search-input:focus {
+    box-shadow: 0 0 0 3px rgba(248, 208, 48, 0.3);
+}
+
+/* Filter select styles */
+.filter-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
